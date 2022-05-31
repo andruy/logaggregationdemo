@@ -37,6 +37,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/{id}")
+	@Authorized(allowedRoles = {Role.ADMIN})
 	public ResponseEntity<User> findById(@PathVariable("id") int id) {
 		authorizationService.guardByUserId(id);
 		
@@ -44,14 +45,14 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User u) {
+	public ResponseEntity<User> insert(@RequestBody User user) {
 		
-		return ResponseEntity.accepted().body(userService.insert(u));
+		return ResponseEntity.accepted().body(userService.insert(user));
 	}
 	
 	
 	@PutMapping
-	@Authorized(allowedRoles = {Role.ADMIN, Role.CUSTOMER, Role.CUSTOMER})
+	@Authorized(allowedRoles = {Role.ADMIN, Role.CUSTOMER})
 	public ResponseEntity<User> update(@RequestBody User u) {
 		authorizationService.guardByUserId(u.getId());
 		// We will also check if this resource belongs to the User, even if they pass the @Authorized annotation
