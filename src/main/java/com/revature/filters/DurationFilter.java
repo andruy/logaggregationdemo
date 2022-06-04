@@ -1,7 +1,6 @@
 package com.revature.filters;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.servlet.FilterChain;

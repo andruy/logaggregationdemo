@@ -1,6 +1,5 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.exceptions.UserNotFoundException;
-import com.revature.models.Cart;
-import com.revature.models.Item;
-import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.repositories.UserRepository;
 
@@ -24,6 +20,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userDAO;
+
+	@Autowired
+	private ItemService itemService;
 	
 	public List<User> findAll() {
 		return userDAO.findAll();
@@ -40,9 +39,7 @@ public class UserService {
 			throw new RuntimeException("User ID must be zero to create a new User");
 		}
 
-		user.setCart(new Cart());
-		user.setRole(Role.CUSTOMER);
-		user.getCart().setItemsList(new ArrayList<Item>());
+		// user.getCart().setItemsList(new ArrayList<Item>());
 		
 		userDAO.save(user); // Modify the user with the new ID
 		
@@ -79,7 +76,7 @@ public class UserService {
 	}
 
 	public User login(String username, String password) {
-		User exists = userDAO.findByUsernameAndPassword(username, password)
+		User user = userDAO.findByUsernameAndPassword(username, password)
 							.orElseThrow(() -> new UserNotFoundException(
 								String.format("No User with username = %s or wrong password", username)));
 		// Check that the given password matches the password in the User object
@@ -87,9 +84,22 @@ public class UserService {
 		
 		
 		HttpSession session = req.getSession();
-		session.setAttribute("currentUser", exists);
+		session.setAttribute("currentUser", user);
+		itemService.getCartItems();
 		
-		return exists;
+		return user;
+	}
+
+	public User getCurrentUser() {
+		HttpSession session = req.getSession(false);
+		
+		if(session == null || session.getAttribute("currentUser") == null) {
+			throw new RuntimeException("Must be logged in to perform this action");
+		}
+		
+		User user = (User) session.getAttribute("currentUser");
+		
+		return user;
 	}
 	
 	public void logout() {

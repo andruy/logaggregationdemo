@@ -1,12 +1,13 @@
 package com.revature.models;
 
-import javax.persistence.CascadeType;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,8 +24,8 @@ public class User {
 	private int id;
 	private String username, password;
 	private Role role;
-	@OneToOne(cascade = CascadeType.ALL)
-	private Cart cart;
+	@Transient
+	private List<Item> cart;
 
     public User(String username, String password) {
         this.username = username;

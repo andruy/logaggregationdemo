@@ -32,7 +32,6 @@ public class UserController {
 	@Authorized(allowedRoles = {Role.ADMIN})
 	@GetMapping
 	public ResponseEntity<List<User>> findAll() {
-		
 		return ResponseEntity.ok(userService.findAll());
 	}
 	
@@ -53,11 +52,11 @@ public class UserController {
 	
 	@PutMapping
 	@Authorized(allowedRoles = {Role.ADMIN, Role.CUSTOMER})
-	public ResponseEntity<User> update(@RequestBody User u) {
-		authorizationService.guardByUserId(u.getId());
+	public ResponseEntity<User> update(@RequestBody User user) {
+		authorizationService.guardByUserId(user.getId());
 		// We will also check if this resource belongs to the User, even if they pass the @Authorized annotation
 		
-		return ResponseEntity.accepted().body(userService.update(u));
+		return ResponseEntity.accepted().body(userService.update(user));
 	}
 	
 	@Authorized(allowedRoles = {Role.ADMIN})

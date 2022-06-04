@@ -94,6 +94,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>p1</finalName>
 	</build>
 
 </project>

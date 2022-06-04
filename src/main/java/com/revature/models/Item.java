@@ -17,11 +17,11 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String description;
     private double price;
 
-    public Item(String name, int id) {
-        this.name = name;
-        this.id = id;
+    public Item(String description, double price) {
+        this.description = description;
+        this.price = price;
     }
 }
