@@ -14,7 +14,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     public Item findById(int id);
 
-    public Optional<Void> save(Cart Item);
+    public Optional<Void> save(Cart item);
 
     @Query(value = "insert into carts (user_id, item_id) values (?1, ?2)", nativeQuery = true)
     public Optional<Void> addToCart(int userId, int itemId);
