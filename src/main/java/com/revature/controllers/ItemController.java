@@ -44,9 +44,8 @@ public class ItemController {
     }
 
     @Authorized(allowedRoles = {Role.CUSTOMER})
-    @GetMapping("/cart/buy")
+    @PostMapping("/cart/buy")
     public ResponseEntity<String> placeOrder() {
-        itemService.placeOrder();
-        return ResponseEntity.accepted().body("Order has been placed");
+        return ResponseEntity.accepted().body(itemService.placeOrder());
     }
 }
