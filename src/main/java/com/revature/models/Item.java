@@ -6,11 +6,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "items")
 public class Item {
@@ -19,9 +21,4 @@ public class Item {
     private int id;
     private String description;
     private double price;
-
-    public Item(String description, double price) {
-        this.description = description;
-        this.price = price;
-    }
 }

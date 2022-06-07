@@ -21,7 +21,6 @@ public class Cart {
     private int id;
     private int userId;
     private int itemId;
-    // private int quantity;
 
     public Cart(int userId, int itemId) {
         this.userId = userId;
